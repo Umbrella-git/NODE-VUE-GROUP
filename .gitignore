@@ -102,3 +102,25 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Stores VS Code versions used for testing VS Code extensions
+.vscode-test
+
+# Visual Studio Code settings
+.vscode/
+
+# Optional stylelint cache
+.stylelint-cache
+
+
+# Dependency directories
+node_modules/
+
+# Editor directories and files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+/.history
