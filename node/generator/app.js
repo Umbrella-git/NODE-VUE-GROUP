@@ -1,41 +1,57 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+// 引入http-errors模块，用于创建HTTP错误
+var createError = require("http-errors");
+// 引入express模块，用于创建web应用
+var express = require("express");
+// 引入path模块，用于处理文件路径
+var path = require("path");
+// 引入cookie-parser模块，用于解析cookie
+var cookieParser = require("cookie-parser");
+// 引入morgan模块，用于记录HTTP请求日志
+var logger = require("morgan");
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+// 引入index路由模块
+var indexRouter = require("./routes/index");
+// 引入users路由模块
+var usersRouter = require("./routes/users");
 
+// 创建express应用
 var app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+// 设置视图文件夹和视图引擎
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "ejs");
 
-app.use(logger('dev'));
+// 使用morgan中间件记录HTTP请求日志
+app.use(logger("dev"));
+// 使用express.json中间件解析JSON格式的请求体
 app.use(express.json());
+// 使用express.urlencoded中间件解析URL编码格式的请求体
 app.use(express.urlencoded({ extended: false }));
+// 使用cookie-parser中间件解析cookie
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+// 使用express.static中间件提供静态文件服务
+app.use(express.static(path.join(__dirname, "public")));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+// 使用index路由
+app.use("/", indexRouter);
+// 使用users路由
+app.use("/users", usersRouter);
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
+// 捕获404错误，并转发到错误处理程序
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
+// 错误处理程序
+app.use(function (err, req, res, next) {
+  // 设置本地变量，仅在开发环境中提供错误信息
   res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  res.locals.error = req.app.get("env") === "development" ? err : {};
 
-  // render the error page
+  // 渲染错误页面
   res.status(err.status || 500);
-  res.render('error');
+  res.render("error");
 });
 
+// 导出应用
 module.exports = app;
